@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .menu {
+            background-color: #158cea;
+            color: azure;
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+        }
+
+        .menu ul{
+            display:inline-block;
+            margin: 10, 10;
+        }
+
+        .menu ul li{
+            float:left;
+            list-style:none;
+            margin-left:20px;
+        }
+
+        .btn {
+            background-color: #ecd553;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 24px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li><button class="btn">画笔</button></li>
+            <li><button class="btn">矩形</button></li>
+            <li><button class="btn">清空画布</button></li>
+        </ul>
+    </div>
+    <canvas id="canvas"></canvas>
+</body>
+    <script>
+        let canvas = document.getElementById("canvas")
+        canvas.width = document.documentElement.clientWidth
+        canvas.height = document.documentElement.clientHeight
+        let ctx = canvas.getContext("2d")
+        // console.log(ctx)
+        let painting = false
+        let begin
+
+        canvas.onmousedown = function(e){
+            begin = [e.clientX, e.clientY]
+            painting = true
+            console.log(begin)
+        }
+        canvas.onmousemove = function(e){
+            if(painting === true){
+                drawLine(begin[0], begin[1], e.clientX, e.clientY)
+                begin = [e.clientX, e.clientY]
+            } 
+        }
+        canvas.onmouseup = function(){
+            painting = false
+        }
+
+
+        function drawLine(x1, y1, x2, y2){
+            ctx.beginPath()
+            ctx.moveTo(x1, y1)
+            ctx.lineTo(x2, y2)
+            ctx.stroke()
+        }
+        
+
+    </script>
+</html>
